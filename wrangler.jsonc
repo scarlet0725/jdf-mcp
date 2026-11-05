@@ -1,0 +1,32 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "jdf-mcp",
+	"main": "src/worker.ts",
+	"compatibility_date": "2026-10-15",
+	"routes": [
+		// Custom Domain。DNS レコードと証明書は wrangler deploy で作られる (team-syn.com のゾーンが同じアカウントにあること)
+		{
+			"pattern": "odpt.team-syn.com",
+			"custom_domain": true
+		}
+	],
+	// 公開するのは上のドメインだけにする (バージョンごとの Preview URL も workers.dev 上なので止める)
+	"workers_dev": false,
+	"preview_urls": false,
+	"kv_namespaces": [
+		// 正規化済みの時刻表を置く。id を省略すると初回の wrangler deploy で作成される
+		{
+			"binding": "TIMETABLE",
+			"id": "c211a5c5be054268b303893f7fc4b861"
+		}
+	],
+	"triggers": {
+		// ODPT のダンプを 6 時間ごとに取り直す (UTC)
+		"crons": [
+			"15 */6 * * *"
+		]
+	},
+	"observability": {
+		"enabled": true
+	}
+}

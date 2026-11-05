@@ -1,0 +1,3 @@
+# wrangler dev 用。.dev.vars にコピーして使う。本番は `wrangler secret put ODPT_CONSUMER_KEY` で設定する
+# 公共交通オープンデータセンターで発行されたアクセストークン
+ODPT_CONSUMER_KEY=
